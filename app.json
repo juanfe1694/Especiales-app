@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "Especiales_App",
+    "scheme": "Especiales_App",
+    "slug": "Especiales_App",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "EspecialesAppIOS"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "config": {
+        "cleartext": {
+          "configurations": {
+            "devDebug": true
+          }
+        },
+        "googleMaps": {
+          "apiKey": "AIzaSyB4j1he8XiLQeviL-zFrDMfAdJFrS8d2Yc"
+        }
+      },
+      "package": "com.juanfe1694.Especiales_App"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9a3764b5-58c9-45f3-862b-4b293044e90c"
+      }
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ]
+    ]
+  }
+}
