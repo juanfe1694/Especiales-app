@@ -6,9 +6,12 @@ import { rtdb } from "../services/realtimeDBService";
 
 export const useEnterpriseService = () => {
 
-   const [services, setServices] = useState<any[]>([]);
+   const [pendingServices, setPendingServices] = useState<any[]>([]);
+   const [confirmedServices, setConfirmedServices] = useState<any[]>([]);
+   const [historicServices, setHistoricServices] = useState<any[]>([]);
    const [isLoading, setisLoading] = useState(true);
 
+   const services = [...pendingServices, ...confirmedServices, ...historicServices ];
    const saveEnterpriseService = (requestService: scheduleServiceCompany) => {
       
       let newRequestService : serviceCompanyModel = {
@@ -25,7 +28,7 @@ export const useEnterpriseService = () => {
       set(
          ref(
             rtdb,
-            'servicios-empresariales/' 
+            'servicios-empresariales/pendientes/' 
             + requestService.requester 
             + '/' 
             + newPostKey
@@ -37,16 +40,50 @@ export const useEnterpriseService = () => {
    }
   
    const getEnterpriseServices = (companyId: bigint) => {
-      const starCountRef = ref(rtdb, 'servicios-empresariales/' + companyId );
-      onValue(starCountRef, (snapshot) => {
+      /** Configuro los objetos de escucha */
+      const pendingRef = ref(rtdb, 'servicios-empresariales/pendientes/' + companyId );
+      const confirmRef = ref(rtdb, 'servicios-empresariales/confirmados/' + companyId );
+      const historicRef = ref(rtdb, 'servicios-empresariales/historial/' + companyId );
+      /** Servicios pendientes */
+      onValue(pendingRef, (snapshot) => {
         if(snapshot.exists()){
          const arrayData : any[] = [];
          snapshot.forEach(( snap ) => { arrayData.push(snap.toJSON()) })
-         setServices(arrayData);
+         setPendingServices(arrayData);
+        } else {
+         setPendingServices([]);
         }
         setisLoading(false);
       }); 
+      /** Servicios confirmados */
+      onValue(confirmRef, (snapshot) => {
+         if(snapshot.exists()){
+          const arrayData : any[] = [];
+          snapshot.forEach(( snap ) => { arrayData.push(snap.toJSON()) })
+          setConfirmedServices(arrayData);
+         } else {
+            setConfirmedServices([]);
+         }
+       });
+       /** Historial de servicios */
+       onValue(historicRef, (snapshot) => {
+         if(snapshot.exists()){
+          const arrayData : any[] = [];
+          snapshot.forEach(( snap ) => { arrayData.push(snap.toJSON()) })
+          setHistoricServices(arrayData);
+         } else {
+            setHistoricServices([]);
+         }
+       });
    }    
-  return { saveEnterpriseService, getEnterpriseServices, services, isLoading }
+   return { 
+      saveEnterpriseService, 
+      getEnterpriseServices, 
+      pendingServices, 
+      confirmedServices, 
+      historicServices,
+      services, 
+      isLoading 
+   }
 }
 

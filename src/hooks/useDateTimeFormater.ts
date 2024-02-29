@@ -37,14 +37,18 @@ export const useDateTimeFormater = () => {
         return({ months, days, hours });
       };
 
-      const getFormatedDate = (date: Date) => {
-        const newDate = new Date(date)
-        return newDate.toLocaleDateString('es-ES', dateFormat)
+      const getFormatedDate = (date?: Date) => {
+        if(date){
+          const newDate = new Date(date)
+          return newDate.toLocaleDateString('es-ES', dateFormat)
+        }
       }
 
-      const getFormatedTime = (time: Date) => {
-        const convertedTime = convertTo12HourFormat(time.toString());
-        return convertedTime;
+      const getFormatedTime = (time?: Date) => {
+        if(time){
+          const convertedTime = convertTo12HourFormat(time.toString());
+          return convertedTime;
+        }
       }
 
   return { convertTo12HourFormat, getRemainingTime, getFormatedDate, getFormatedTime }

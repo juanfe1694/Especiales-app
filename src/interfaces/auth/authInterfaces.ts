@@ -23,6 +23,12 @@ export interface userInfo {
   numeroContrato: bigint,
   numeroDocumento: bigint,
   roles: string[],
+  permisos: Permission[],
   tipoDocumento: string,
   urlImagenPerfil: string
+}
+
+export interface Permission {
+  modulo: string;
+  permisos: string[];
 }

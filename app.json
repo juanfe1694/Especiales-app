@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Especiales_App",
-    "scheme": "Especiales_App",
+    "name": "Fenix servicios especiales",
+    "scheme": "especialesapp",
     "slug": "Especiales_App",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,6 +20,8 @@
       "bundleIdentifier": "EspecialesAppIOS"
     },
     "android": {
+      "useNextNotificationsApi": true,
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

@@ -29,7 +29,7 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="Especiales_App"/>
+        <data android:scheme="especialesapp"/>
         <data android:scheme="com.juanfe1694.Especiales_App"/>
         <data android:scheme="exp+especialesapp"/>
       </intent-filter>

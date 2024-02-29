@@ -1,56 +1,61 @@
 import React, { useEffect, useState } from 'react'
-import { useEnterpriseService } from '../../hooks/useEnterpriseService';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { View } from 'react-native';
 import { BlankPage } from '../utilities/BlankPage';
 import { Loading } from '../utilities/Loading';
 import { ServicesTabs } from '../../components/services/ServicesTabs';
 import { ServiceTabsItems } from '../../interfaces/services/servicesInterfaces';
-import { PendingServices } from '../../components/services/PendingServices';
 import { setRequestState } from '../../redux/slices/services/companyServicesSlice';
 import { ActiveServices } from '../../components/services/ActiveServices';
 import { HistoricServices } from '../../components/services/HistoricServices';
+import { useDriverEnterpriseService } from '../../hooks/useDriverEnterpriseService';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { RejectedServices } from '../../components/services/RejectedServices';
 
-export const ServicesListScreen = () => {
+export const DriverServicesListScreen = () => {
   const { userInfo } = useAppSelector(state => state.auth);
   const { requestState } = useAppSelector(state => state.services);
   const { 
     getEnterpriseServices, 
-    pendingServices, 
     confirmedServices, 
     historicServices, 
-    isLoading } = useEnterpriseService();
+    rejectedServices,
+    currentServices,
+    isLoading } = useDriverEnterpriseService();
   const [tabsOptions, setTabsOptions] = useState<ServiceTabsItems[]>([
     {
-      label: 'Pendientes',
-      notification: false
-    },
-    {
-      label: 'Confirmados',
+      label: 'Activos',
       notification: false
     },
     {
       label: 'Historial',
       notification: false
+    },
+    {
+      label: 'Rechazados',
+      notification: false
     }
   ]);
 
   const dispatch = useAppDispatch();
-
+  const route = useRoute();
+  const serviceId = route.params?.serviceId;
+  const navigation = useNavigation();
+  
   useEffect(() => {
-    dispatch(setRequestState('Pendientes'));
+    dispatch(setRequestState('Activos'));
   }, [])
 
   useEffect(() => {
     getEnterpriseServices(userInfo.numeroDocumento)
   }, [userInfo])
-
+/*
   useEffect(() => {
 
-    if( requestState != 'Confirmados' ){
+    if( requestState != 'Activos' ){
       const currentTabs = [ ...tabsOptions ];
       const updatedTabs = currentTabs.map(current => {
-        if(current.label == 'Confirmados'){
+        if(current.label == 'Activos'){
           return {
             ...current,
             notification: true
@@ -61,7 +66,7 @@ export const ServicesListScreen = () => {
       }) 
         setTabsOptions(updatedTabs)
     }
-  }, [confirmedServices])
+  }, [requestState, currentServices])
 
   useEffect(() => {
     if( requestState != 'Historial' ){
@@ -79,16 +84,36 @@ export const ServicesListScreen = () => {
         setTabsOptions(updatedTabs)
     }
     
-  }, [historicServices])
-  
+  }, [requestState, historicServices])
+
+  useEffect(() => {
+    if( requestState != 'Rechazados' ){
+      const currentTabs = [ ...tabsOptions ];
+      const updatedTabs = currentTabs.map(current => {
+        if(current.label == 'Rechazados'){
+          return {
+            ...current,
+            notification: true
+          }
+        } else{
+          return current;
+        }
+      }) 
+        setTabsOptions(updatedTabs)
+    }
+    
+  }, [requestState, rejectedServices])
+
+*/
 
   const onTabChange = (tabSelected: string) => {
+    serviceId && navigation.setParams({ serviceId: undefined });
     dispatch(setRequestState(tabSelected));
     switch (tabSelected) {
-      case 'Confirmados':
+      case 'Activos':
         const currentTabs = [ ...tabsOptions ];
       const updatedTabs = currentTabs.map(current => {
-        if(current.label == 'Confirmados'){
+        if(current.label == 'Activos'){
           return {
             ...current,
             notification: false
@@ -117,6 +142,23 @@ export const ServicesListScreen = () => {
         }
         
         break;
+        case 'Rechazados':
+          if( requestState != 'Rechazados' ){
+            const currentTabs = [ ...tabsOptions ];
+            const updatedTabs = currentTabs.map(current => {
+              if(current.label == 'Rechazados'){
+                return {
+                  ...current,
+                  notification: false
+                }
+              } else{
+                return current;
+              }
+            }) 
+              setTabsOptions(updatedTabs)
+          }
+          
+          break;
 
       default:
         break;
@@ -137,13 +179,13 @@ export const ServicesListScreen = () => {
               </View>
               
               {
-                requestState == 'Pendientes' 
-                  ? <PendingServices services={pendingServices} />
-                  : requestState == 'Confirmados'
-                    ? <ActiveServices services={confirmedServices} />
+                 requestState == 'Activos'
+                    ? <ActiveServices services={currentServices} serviceId={serviceId}/>
                     : requestState == 'Historial'
                       ? <HistoricServices services={historicServices} />
-                      : <BlankPage />
+                      : requestState == 'Rechazados'
+                        ? <RejectedServices services={rejectedServices} />
+                        : <BlankPage />
               }  
             </>     
       }

@@ -2,13 +2,15 @@ import { configureStore } from '@reduxjs/toolkit'
 import { authReducer } from "../redux/slices/security/authSlice";
 import { userReducer } from '../redux/slices/security/userSlice';
 import { themeReducer } from '../redux/slices/theme/themeSlice';
+import { servicesReducer } from '../redux/slices/services/companyServicesSlice';
 
 /* Creating a store with the reducers. */
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     user: userReducer,
-    theme: themeReducer
+    theme: themeReducer,
+    services: servicesReducer
    },
 
 })
