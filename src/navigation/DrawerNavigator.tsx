@@ -86,14 +86,14 @@ export const DrawerNavigator = () => {
         component={ DriverServicesListScreen }
         options={{title:'Historial de servicios'}}
       />
-      {/*
+      
       <Drawer.Screen name="Home" component={ PortalScreen } />
       <Drawer.Screen 
         name="ScheduleServiceCompany" 
         component={ ScheduleCompanyServiceScreen }
         options={{title:'Programar servicio'}}
       />
-      <Drawer.Screen 
+      {/*<Drawer.Screen 
         name="ServicesListScreen" 
         component={ ServicesListScreen }
         options={{title:'Historial de servicios'}}

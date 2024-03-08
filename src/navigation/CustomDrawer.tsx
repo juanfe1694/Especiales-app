@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, Image, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
+import { Text, View, Image, SafeAreaView, ScrollView, TouchableOpacity, Platform } from 'react-native'
 import { drawerStyles } from './CustomDrawerStyles';
 import { Divider, Button  } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -42,65 +42,67 @@ export const CustomDrawer = ( { descriptors, navigation, state } : DrawerContent
 
   return (
     <SafeAreaView style={drawerStyles.mainContainter}>
-        <View style={drawerStyles.imageContainter}>
-            <Image 
-                source={require('../../assets/logos/Logo-especiales.jpg')} 
-                style={drawerStyles.image}
-            />
-        </View>
-        <DrawerContentScrollView>
-           {/* <View 
-                style={drawerStyles.moduleContainer}
-            >
-                <Text style={drawerStyles.moduleText}>
-                        Portal
-                </Text>
+        
+            <View style={drawerStyles.imageContainter}>
+                <Image 
+                    source={require('../../assets/logos/Logo-especiales.jpg')} 
+                    style={drawerStyles.image}
+                />
+            </View>
+            <DrawerContentScrollView style={Platform.OS === 'ios' && {padding: 15}}>
+            {/* <View 
+                    style={drawerStyles.moduleContainer}
+                >
+                    <Text style={drawerStyles.moduleText}>
+                            Portal
+                    </Text>
+                    {
+                        renderTab(
+                            state?.routes.find((route) => route.name === DrawerRoutes['Inicio']),  
+                            state.routes[state.index].name === DrawerRoutes['Inicio'],
+                            'Inicio'
+                        )
+                    }
+                    <Divider style={{marginTop: 10}} />
+                </View>
+                */}
                 {
-                    renderTab(
-                        state?.routes.find((route) => route.name === DrawerRoutes['Inicio']),  
-                        state.routes[state.index].name === DrawerRoutes['Inicio'],
-                        'Inicio'
+                    userInfo?.permisos?.map(item => 
+                        <View 
+                            key={item.modulo}
+                            style={drawerStyles.moduleContainer}
+                        >
+                            <Text style={drawerStyles.moduleText}>
+                                { item.modulo }
+                            </Text>
+                            {
+                                item.permisos.map((permission) =>
+                                    <>
+                                        {renderTab(
+                                            state?.routes.find((route) => route.name === DrawerRoutes[permission]),  
+                                            state.routes[state.index].name === DrawerRoutes[permission],
+                                            permission
+                                        )}
+                                    </>
+                                )
+                            }
+                            <Divider style={{marginTop: 10}} />
+                        </View>
                     )
                 }
-                <Divider style={{marginTop: 10}} />
+            </DrawerContentScrollView>
+            <View style={Platform.OS === 'ios' && {padding: 15}}>
+            { /* <Text> Estado del usuario </Text> */ }
+                <Button 
+                    icon="logout" 
+                    mode="outlined" 
+                    onPress={logout}
+                    style={{marginVertical: 10}}
+                >
+                    Cerrar sesión
+                </Button>
             </View>
-            */}
-            {
-                userInfo?.permisos?.map(item => 
-                    <View 
-                        key={item.modulo}
-                        style={drawerStyles.moduleContainer}
-                    >
-                        <Text style={drawerStyles.moduleText}>
-                            { item.modulo }
-                        </Text>
-                        {
-                            item.permisos.map((permission) =>
-                                <>
-                                    {renderTab(
-                                        state?.routes.find((route) => route.name === DrawerRoutes[permission]),  
-                                        state.routes[state.index].name === DrawerRoutes[permission],
-                                        permission
-                                    )}
-                                </>
-                            )
-                        }
-                        <Divider style={{marginTop: 10}} />
-                    </View>
-                )
-            }
-        </DrawerContentScrollView>
-        <View>
-          { /* <Text> Estado del usuario </Text> */ }
-            <Button 
-                icon="logout" 
-                mode="outlined" 
-                onPress={logout}
-                style={{marginVertical: 10}}
-            >
-                Cerrar sesión
-            </Button>
-        </View>
+       
     </SafeAreaView>
   )
 }

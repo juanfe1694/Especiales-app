@@ -17,7 +17,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "EspecialesAppIOS"
+      "bundleIdentifier": "com.fenixserviciosespeciales.mobility.app"
     },
     "android": {
       "useNextNotificationsApi": true,
@@ -36,7 +36,7 @@
           "apiKey": "AIzaSyB4j1he8XiLQeviL-zFrDMfAdJFrS8d2Yc"
         }
       },
-      "package": "com.juanfe1694.Especiales_App"
+      "package": "com.fenixserviciosespeciales.mobility.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
