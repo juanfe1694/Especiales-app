@@ -6,6 +6,7 @@ export enum DrawerRoutes {
     'Programar servicio' = 'ScheduleServiceCompany',
     'Mis servicios' = 'ServicesListScreen',
     'Inicio' = 'Home',
-    'Servicios' = 'DriverServicesListScreen'
+    'Servicios' = 'DriverServicesListScreen',
+    'Crear usuario' = 'BlankPageScreen'
 }
 

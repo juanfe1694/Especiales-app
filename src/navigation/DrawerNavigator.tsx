@@ -13,6 +13,7 @@ import * as Device from 'expo-device';
 import Constants from 'expo-constants';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useEffect, useState } from 'react';
+import { BlankPage } from '../screens/utilities/BlankPage';
 
 async function registerForPushNotificationsAsync() {
   let token;
@@ -93,17 +94,17 @@ export const DrawerNavigator = () => {
         component={ ScheduleCompanyServiceScreen }
         options={{title:'Programar servicio'}}
       />
-      {/*<Drawer.Screen 
+      <Drawer.Screen 
         name="ServicesListScreen" 
         component={ ServicesListScreen }
-        options={{title:'Historial de servicios'}}
+        options={{title:'Historial de solicitudes'}}
       />
       <Drawer.Screen 
-        name="DriverServicesListScreen" 
-        component={ DriverServicesListScreen }
-        options={{title:'Historial de servicios'}}
+        name="BlankPageScreen" 
+        component={ BlankPage }
+        options={{title:'Pagina en construccion'}}
       />
-      <Drawer.Screen 
+      {/*<Drawer.Screen 
         name="DriverMapScreen" 
         component={ DriverMapScreen }
         options={{title:'Mapa'}}

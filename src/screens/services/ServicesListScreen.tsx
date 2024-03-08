@@ -6,19 +6,19 @@ import { BlankPage } from '../utilities/BlankPage';
 import { Loading } from '../utilities/Loading';
 import { ServicesTabs } from '../../components/services/ServicesTabs';
 import { ServiceTabsItems } from '../../interfaces/services/servicesInterfaces';
-import { PendingServices } from '../../components/services/PendingServices';
 import { setRequestState } from '../../redux/slices/services/companyServicesSlice';
-import { ActiveServices } from '../../components/services/ActiveServices';
-import { HistoricServices } from '../../components/services/HistoricServices';
+import { Services } from '../../components/services/Services';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 export const ServicesListScreen = () => {
   const { userInfo } = useAppSelector(state => state.auth);
   const { requestState } = useAppSelector(state => state.services);
   const { 
     getEnterpriseServices, 
-    pendingServices, 
     confirmedServices, 
-    historicServices, 
+    historicServices,
+    requestedServices, 
+    activeServices,
     isLoading } = useEnterpriseService();
   const [tabsOptions, setTabsOptions] = useState<ServiceTabsItems[]>([
     {
@@ -36,10 +36,10 @@ export const ServicesListScreen = () => {
   ]);
 
   const dispatch = useAppDispatch();
-
+  const isFocused = useIsFocused();
   useEffect(() => {
-    dispatch(setRequestState('Pendientes'));
-  }, [])
+    isFocused && dispatch(setRequestState('Pendientes'));
+  }, [isFocused])
 
   useEffect(() => {
     getEnterpriseServices(userInfo.numeroDocumento)
@@ -123,6 +123,19 @@ export const ServicesListScreen = () => {
     }
   }
 
+  const getCurrentServices = (state: string) => {
+    switch (state) {
+      case 'Pendientes':
+        return requestedServices;
+      case 'Confirmados':
+        return activeServices;
+      case 'Historial':
+        return historicServices;
+      default:
+        return requestedServices;
+    }
+  }
+
   return (
     <>
       {
@@ -137,12 +150,8 @@ export const ServicesListScreen = () => {
               </View>
               
               {
-                requestState == 'Pendientes' 
-                  ? <PendingServices services={pendingServices} />
-                  : requestState == 'Confirmados'
-                    ? <ActiveServices services={confirmedServices} />
-                    : requestState == 'Historial'
-                      ? <HistoricServices services={historicServices} />
+                getCurrentServices(requestState).length
+                      ? <Services services={getCurrentServices(requestState)} showValueCompany />
                       : <BlankPage />
               }  
             </>     

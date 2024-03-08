@@ -81,9 +81,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'com.juanfe1694.Especiales_App'
+    namespace 'com.fenixserviciosespeciales.mobility.app'
     defaultConfig {
-        applicationId 'com.juanfe1694.Especiales_App'
+        applicationId 'com.fenixserviciosespeciales.mobility.app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

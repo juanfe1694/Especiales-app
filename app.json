@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Fenix servicios especiales",
+    "name": "Fenix mobility",
     "scheme": "especialesapp",
     "slug": "Especiales_App",
     "version": "1.0.0",
@@ -36,7 +36,12 @@
           "apiKey": "AIzaSyB4j1he8XiLQeviL-zFrDMfAdJFrS8d2Yc"
         }
       },
-      "package": "com.fenixserviciosespeciales.mobility.app"
+      "package": "com.fenixserviciosespeciales.mobility.app",
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -53,6 +58,7 @@
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
         }
       ]
-    ]
+    ],
+    "owner": "fenix-mobility"
   }
 }

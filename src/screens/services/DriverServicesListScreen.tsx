@@ -6,18 +6,16 @@ import { Loading } from '../utilities/Loading';
 import { ServicesTabs } from '../../components/services/ServicesTabs';
 import { ServiceTabsItems } from '../../interfaces/services/servicesInterfaces';
 import { setRequestState } from '../../redux/slices/services/companyServicesSlice';
-import { ActiveServices } from '../../components/services/ActiveServices';
-import { HistoricServices } from '../../components/services/HistoricServices';
+import { Services } from '../../components/services/Services';
 import { useDriverEnterpriseService } from '../../hooks/useDriverEnterpriseService';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { RejectedServices } from '../../components/services/RejectedServices';
+import { NavigationProp, RouteProp, useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
+import { DrawerParamList } from '../../../types';
 
 export const DriverServicesListScreen = () => {
   const { userInfo } = useAppSelector(state => state.auth);
   const { requestState } = useAppSelector(state => state.services);
   const { 
-    getEnterpriseServices, 
-    confirmedServices, 
+    getEnterpriseServices,  
     historicServices, 
     rejectedServices,
     currentServices,
@@ -38,13 +36,16 @@ export const DriverServicesListScreen = () => {
   ]);
 
   const dispatch = useAppDispatch();
-  const route = useRoute();
+  const route = useRoute<RouteProp<DrawerParamList, keyof DrawerParamList>>();
   const serviceId = route.params?.serviceId;
-  const navigation = useNavigation();
-  
+  const navigation = useNavigation<NavigationProp<DrawerParamList>>();
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    dispatch(setRequestState('Activos'));
-  }, [])
+    if(isFocused) {
+      dispatch(setRequestState('Activos'));
+    }
+  }, [isFocused])
 
   useEffect(() => {
     getEnterpriseServices(userInfo.numeroDocumento)
@@ -180,11 +181,11 @@ export const DriverServicesListScreen = () => {
               
               {
                  requestState == 'Activos'
-                    ? <ActiveServices services={currentServices} serviceId={serviceId}/>
+                    ? <Services services={currentServices} serviceId={serviceId} showActions/>
                     : requestState == 'Historial'
-                      ? <HistoricServices services={historicServices} />
+                      ? <Services services={historicServices} />
                       : requestState == 'Rechazados'
-                        ? <RejectedServices services={rejectedServices} />
+                        ? <Services services={rejectedServices} />
                         : <BlankPage />
               }  
             </>     

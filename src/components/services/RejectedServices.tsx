@@ -7,15 +7,16 @@ import { ServiceDetail } from './ServiceDetail';
 type Props = {
     services: any[];
     serviceId?: string;
+    showActions?: boolean;
 }
 
-export const RejectedServices = ({ services } : Props) => {
-  //const [dialogVisible, setdialogVisible] = useState(false);
-  //const [service, setservice] = useState(services[0]);
+export const RejectedServices = ({ services, showActions = false} : Props) => {
+  const [dialogVisible, setdialogVisible] = useState(false);
+  const [service, setservice] = useState(services[0]);
     
   /*useEffect(() => {
     serviceId && showDialog(serviceId);
-  }, [serviceId])
+  }, [serviceId])*/
 
   const showDialog = (serviceId?: string) => {
     const service = services.find(x => x.serviceId == serviceId);
@@ -31,8 +32,7 @@ export const RejectedServices = ({ services } : Props) => {
 
   const openDialog = () => {
     setdialogVisible(true);
-  }*/
-  const showDialog = (serviceId?: string) => {}
+  }
 
     return (
         <>
@@ -48,15 +48,13 @@ export const RejectedServices = ({ services } : Props) => {
                     </View>
                   : <BlankPage />
             }
-           { 
-           /*
            <ServiceDetail 
               dialogVisible={dialogVisible}
               closeDialog={closeDialog} 
               openDialog={openDialog}
               service={service}
+              showActions={showActions}
             />  
-            */}
         </>
       )
     }

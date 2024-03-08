@@ -6,13 +6,19 @@ import { RFPercentage } from 'react-native-responsive-fontsize';
 import Animated, { useSharedValue, withTiming } from 'react-native-reanimated';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useDateTimeFormater } from '../../hooks/useDateTimeFormater';
-import { MainButton } from '../../app/custom-components/MainButton';
 import { useDriverEnterpriseService } from '../../hooks/useDriverEnterpriseService';
 import { cardStyles } from './cardStyles';
+import { Chip } from 'react-native-paper';
+import { StatusChip } from './StatusChip';
 
 type Props = {
     service: scheduleServiceCompany,
     showDetail: (serviceId: string) => void
+}
+
+type colorMapProps = {
+    color: string;
+    background: string;
 }
 
 export const CardService = ({ service, showDetail } : Props) => {
@@ -27,20 +33,23 @@ export const CardService = ({ service, showDetail } : Props) => {
         requestState,
         driver,
         vehicle, 
-        serviceId} : scheduleServiceCompany = service;
+        serviceId,
+        serviceNumber } : scheduleServiceCompany = service;
 
     const [showInfo, setshowInfo] = useState(false);
     const { getFormatedDate, getFormatedTime } = useDateTimeFormater();
     const { resEnterpriseService } = useDriverEnterpriseService();
     const regVehicle = (vehicle as Vehicle)?.label ?? '';
 
-    const colorMap: {[key:  string]: string} = {
-        'Asignado' : '#697586',
-        'Confirmado' : '#0A2378',
-        'Rechazado' : '#AB0000',
-        'Completado' : '#00B710',
-        'Transito' : '#0F9905'
-    }
+    const colorMap: {[key:  string]: colorMapProps} = {
+        'Pendiente' : {color: '#697586', background: '#F3F3F3'},
+        'Asignado' : {color: '#0CCACA', background: '#E0FFFF'},
+        'Confirmado' : {color: '#0A2378', background: '#EDF1FF'},
+        'Rechazado' : {color: '#AB0000', background: '#FFF5F5'},
+        'Completado' : {color: '#00B710', background: '#E9FFEB'},
+        'Transito' : {color: '#00BAFF', background: '#E8F9FF'},
+      };
+
     const DURATION = 1000;
     const opacity = useSharedValue(0);
 
@@ -71,9 +80,9 @@ export const CardService = ({ service, showDetail } : Props) => {
         <View 
             style={{
                 ...cardStyles.card,
-                borderLeftWidth: 3,
-                borderLeftColor: colorMap[requestState as string],
-                borderTopColor: colorMap[requestState as string],
+                borderLeftWidth: 5,
+                borderLeftColor: colorMap[requestState as string].color,
+                //borderTopColor: colorMap[requestState as string],
 
             }}
         >
@@ -81,20 +90,35 @@ export const CardService = ({ service, showDetail } : Props) => {
             {/** Contenedor del estado */}
             <View 
                 style={{
-                    borderTopStartRadius: 4,
-                    borderTopEndRadius: 4,
+                    borderTopStartRadius: 2,
+                    borderTopEndRadius: 2,
                     alignItems: 'flex-end',
-                    backgroundColor: colorMap[requestState as string]
-                    }}>
+                    //backgroundColor: colorMap[requestState as string],
+                    paddingVertical: 2,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
+                    }}
+            >
+                <Chip 
+                    style={{ backgroundColor: 'white' }} 
+                    selectedColor='gray' 
+                >
+                    OS - { serviceNumber }
+                </Chip>
+                <StatusChip 
+                    state={ requestState! }
+                    color={ colorMap[requestState as string].color }
+                    background={ colorMap[requestState as string].background }
+                />
 
-                <Text 
+                {/*<Text 
                     style={{marginHorizontal: 10, 
-                    //color: colorMap[requestState as string]
-                    color:'white'
+                    color: colorMap[requestState as string]
+                    //color:'white'
                 }}
                 >
                     { requestState }
-                </Text>
+            </Text>*/}
             </View>
             <View style={cardStyles.stateContainer}>
                 <Text>
@@ -109,14 +133,6 @@ export const CardService = ({ service, showDetail } : Props) => {
                     {' '}
                     { numberOfPassengers }
                 </Text>
-                {/*<Chip 
-                    style={{
-                        backgroundColor: 'white',
-                    }} 
-                    selectedColor='gray' 
-                >
-                    # 225
-                </Chip>*/}
             </View>
 
             {/** Detalles del servicio */}

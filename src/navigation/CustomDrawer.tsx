@@ -67,9 +67,9 @@ export const CustomDrawer = ( { descriptors, navigation, state } : DrawerContent
                 </View>
                 */}
                 {
-                    userInfo?.permisos?.map(item => 
+                    userInfo?.permisos?.map((item, i )=> 
                         <View 
-                            key={item.modulo}
+                            key={i}
                             style={drawerStyles.moduleContainer}
                         >
                             <Text style={drawerStyles.moduleText}>
@@ -79,8 +79,8 @@ export const CustomDrawer = ( { descriptors, navigation, state } : DrawerContent
                                 item.permisos.map((permission) =>
                                     <>
                                         {renderTab(
-                                            state?.routes.find((route) => route.name === DrawerRoutes[permission]),  
-                                            state.routes[state.index].name === DrawerRoutes[permission],
+                                            state?.routes.find((route) => route.name === DrawerRoutes[permission  as keyof typeof DrawerRoutes]),  
+                                            state.routes[state.index].name === DrawerRoutes[permission  as keyof typeof DrawerRoutes],
                                             permission
                                         )}
                                     </>

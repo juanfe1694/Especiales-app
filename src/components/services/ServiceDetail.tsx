@@ -43,9 +43,18 @@ type Props = {
     closeDialog: () => void;
     openDialog: () => void;
     service: scheduleServiceCompany;
+    showActions?: boolean;
+    showValueCompany?: boolean;
 }
 
-export const ServiceDetail = ({dialogVisible,closeDialog,openDialog,service}:Props) => {
+export const ServiceDetail = ({
+    dialogVisible,
+    closeDialog,
+    openDialog,
+    service, 
+    showActions = false, 
+    showValueCompany = false }: Props) => {
+
     const { userInfo } = useAppSelector(state => state.auth);
     const [rejectDialogVisible, setRejectDialogVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +74,8 @@ export const ServiceDetail = ({dialogVisible,closeDialog,openDialog,service}:Pro
         requestState,
         driver,
         vehicle,
-        valueThird
+        valueThird, 
+        valueCompany
     } = service;
     const { getFormatedDate, getFormatedTime } = useDateTimeFormater();
     const { resEnterpriseService, startEnterpriseService, endEnterpriseService } = useDriverEnterpriseService();
@@ -249,37 +259,37 @@ export const ServiceDetail = ({dialogVisible,closeDialog,openDialog,service}:Pro
                                 <Text style={{flex: 1, textAlign:'right'}}> { regVehicle } </Text>
                             </View>
                         }
-                        { (valueThird && isDriver) && 
                             <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
                                 <Text><Ionicons name='wallet' size={RFPercentage(2)} />  Valor </Text>
-                                <Text style={{flex: 1, textAlign:'right'}}> $ { valueThird } </Text>
+                                <Text style={{flex: 1, textAlign:'right'}}> 
+                                    $ { showValueCompany ? valueCompany : valueThird } 
+                                </Text>
                             </View>
-                        }
                     </View>
                 </Dialog.Content>
                 {/** Si el servicio está en estado Asignado, mostrar los botones */}
-                { 
-                    requestState == 'Asignado' &&
+                { showActions &&
+                    requestState == 'Asignado' ?
                         <Dialog.Actions>
                             <Button mode='outlined' style={{borderRadius: 5}} textColor='#6D6D6D' onPress={rejectService} disabled={isLoading}> Rechazar </Button>
                             <Button mode='contained'  style={{borderRadius: 5}} onPress={confirmService} loading={isLoading}> Confirmar </Button>
                         </Dialog.Actions>
-                }
-                {/** Si el servicio está en estado Confirmado, mostrar los botones */}
-                { 
-                    requestState == 'Confirmado' &&
-                        <Dialog.Actions>
-                            <Button mode='outlined' style={{borderRadius: 5}} textColor='#6D6D6D' onPress={cancelService} disabled={isLoading}> Cancelar </Button>
-                            <Button mode='contained'  style={{borderRadius: 5}} onPress={startService} loading={isLoading}> Iniciar </Button>
-                        </Dialog.Actions>
-                }
-                {/** Si el servicio está en estado transito, mostrar los botones */}
-                { 
-                    requestState == 'Transito' &&
-                        <Dialog.Actions>
-                           { /*<Button mode='outlined' style={{borderRadius: 5}} textColor='#6D6D6D' onPress={rejectService} disabled={isLoading}> Rechazar </Button>*/}
-                            <Button mode='contained'  style={{borderRadius: 5}} onPress={displayConfirmDialog} loading={isLoading}> Finalizar </Button>
-                        </Dialog.Actions>
+                
+                /** Si el servicio está en estado Confirmado, mostrar los botones */
+                
+                    : showActions && requestState == 'Confirmado' ?
+                            <Dialog.Actions>
+                                <Button mode='outlined' style={{borderRadius: 5}} textColor='#6D6D6D' onPress={cancelService} disabled={isLoading}> Cancelar </Button>
+                                <Button mode='contained'  style={{borderRadius: 5}} onPress={startService} loading={isLoading}> Iniciar </Button>
+                            </Dialog.Actions>
+                
+                /** Si el servicio está en estado transito, mostrar los botones */
+                
+                    : showActions && requestState == 'Transito' &&
+                            <Dialog.Actions>
+                            { /*<Button mode='outlined' style={{borderRadius: 5}} textColor='#6D6D6D' onPress={rejectService} disabled={isLoading}> Rechazar </Button>*/}
+                                <Button mode='contained'  style={{borderRadius: 5}} onPress={displayConfirmDialog} loading={isLoading}> Finalizar </Button>
+                            </Dialog.Actions>
                 }
             </Dialog>
         </Portal>

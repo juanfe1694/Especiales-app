@@ -1,27 +1,66 @@
-import React from 'react'
-import { ScrollView, View } from 'react-native'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { ScrollView, View, FlatList } from 'react-native'
 import { CardService } from './CardService'
 import { BlankPage } from '../../screens/utilities/BlankPage'
+import { ServiceDetail } from './ServiceDetail';
+import { scheduleServiceCompany } from '../../interfaces/services/servicesInterfaces';
+
+const initialService : scheduleServiceCompany = {
+  numberOfPassengers: 0,
+  destination:{ description:'', latitude:0, longitude:0 },
+  origin:{ description:'', latitude:0, longitude:0 },
+  pickUpDate: new Date(),
+  pickUpTime: new Date(),
+  returnDate: new Date(),
+  returnTime: new Date(),
+  serviceNumber: 0
+}
 
 type Props = {
     services: any[];
+    serviceId?: string;
 }
-export const PendingServices = ({ services } : Props) => {
-    
-  return (
-    <>
-        { 
-            services?.length > 0
-              ? <View style={{flex: 1}}>
-                  <ScrollView>
-                    {
-                      services?.map((service, index) => <CardService key={index} {...service} />)
-                    }
-                  </ScrollView>
-                </View>
-              : <BlankPage />
-        }
-    </>
 
-  )
-}
+export const PendingServices = ({ services, serviceId } : Props) => {
+  const [dialogVisible, setdialogVisible] = useState(false);
+  const [service, setservice] = useState(initialService);
+
+  const showDialog = (serviceId?: string) => {
+    const service = services.find(x => x.serviceId == serviceId);
+    if(service){
+      setservice(service);
+      setdialogVisible(true);
+    }
+  }
+
+  const closeDialog = () => {
+    setdialogVisible(false);
+  }
+
+  const openDialog = () => {
+    setdialogVisible(true);
+  }
+
+    return (
+        <>
+            { 
+                services?.length > 0
+                  ? <View style={{flex: 1}}>
+                      <ScrollView>
+                        {
+                          services?.map((x, index) => 
+                          <CardService key={index} service={x} showDetail={showDialog} />)
+                        }
+                      </ScrollView>
+                    </View>
+                  : <BlankPage />
+            }
+              <ServiceDetail 
+                dialogVisible={dialogVisible}
+                closeDialog={closeDialog} 
+                openDialog={openDialog}
+                service={service}
+              /> 
+        </>
+      )
+    }

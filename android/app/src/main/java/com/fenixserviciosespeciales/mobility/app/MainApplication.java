@@ -1,4 +1,4 @@
-package com.juanfe1694.Especiales_App;
+package com.fenixserviciosespeciales.mobility.app;
 
 import android.app.Application;
 import android.content.res.Configuration;

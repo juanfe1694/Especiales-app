@@ -12,19 +12,21 @@ const initialService : scheduleServiceCompany = {
   pickUpDate: new Date(),
   pickUpTime: new Date(),
   returnDate: new Date(),
-  returnTime: new Date()
+  returnTime: new Date(),
+  serviceNumber: 0
 }
 
 type Props = {
     services: any[];
     serviceId?: string;
+    showActions?: boolean;
+    showValueCompany?: boolean;
 }
 
-export const ActiveServices = ({ services, serviceId } : Props) => {
+export const Services = ({ services, serviceId, showActions = false , showValueCompany = false} : Props) => {
   const [dialogVisible, setdialogVisible] = useState(false);
   const [service, setservice] = useState(initialService);
 
-  const alerted = useRef(false);  
   useEffect(() => {
     if(serviceId) {
       showDialog(serviceId)
@@ -66,6 +68,8 @@ export const ActiveServices = ({ services, serviceId } : Props) => {
                 closeDialog={closeDialog} 
                 openDialog={openDialog}
                 service={service}
+                showActions={showActions}
+                showValueCompany={showValueCompany}
               /> 
         </>
       )

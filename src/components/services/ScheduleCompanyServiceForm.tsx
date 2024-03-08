@@ -9,7 +9,7 @@ import Toast from 'react-native-root-toast';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import { Dialog, Portal, Searchbar } from 'react-native-paper';
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useDateTimeFormater } from '../../hooks/useDateTimeFormater';
 import Animated, {
@@ -24,7 +24,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useEnterpriseService } from '../../hooks/useEnterpriseService';
 import { DrawerParamList } from '../../../types';
 import { setRequestState } from '../../redux/slices/services/companyServicesSlice';
-
+import DateTimePicker from "react-native-modal-datetime-picker";
 
 export const ScheduleCompanyServiceForm = () => {
 
@@ -96,7 +96,7 @@ export const ScheduleCompanyServiceForm = () => {
 
     const [filteredLocations, setfilteredLocations] = useState(locations);
     const navigation = useNavigation<NavigationProp<DrawerParamList>>();
-    const { saveEnterpriseService } = useEnterpriseService();
+    const { saveEnterpriseService , getCounter, updateCounter } = useEnterpriseService();
     const dispatch = useAppDispatch();
     
     useEffect(() => {
@@ -131,7 +131,8 @@ export const ScheduleCompanyServiceForm = () => {
             }
             /** No se requiere validación si doubleTrip no está seleccionado */ 
             return true; 
-          }),
+          })
+          .optional(),
 
       returnTime: yup.date()
         .test(
@@ -143,35 +144,60 @@ export const ScheduleCompanyServiceForm = () => {
             }
             /** No se requiere validación si doubleTrip no está seleccionado */ 
             return true; 
-          }),
+          }) 
+          .optional(),
       
     }).required();
 
     const {
-        watch,
-        getFieldState,
-        getValues,
         setValue,
         handleSubmit,
         control,
         formState: { errors },
-      } = useForm<scheduleServiceCompany>({
-        resolver: yupResolver(schema),
-          defaultValues: {
-            origin: {} as Address,
-            destination: {} as Address
-        },
-      });
+      } = useForm<scheduleServiceCompany>({ resolver: yupResolver<any>(schema) });
 
-      const onSubmit = async (data: scheduleServiceCompany) => {
-        try {
-          setSavingForm(true);
-          saveEnterpriseService({
-            ...data, 
+      const formatDate = (date: Date) => {
+          const newDate = new Date(date);
+          return newDate.toUTCString();
+      }
+
+      const processDateRange = async(data: scheduleServiceCompany) => {
+        const pickupDate = data.pickUpDate//formatDate(data.pickUpDate);
+        const finalDate = data?.returnDate ? data.returnDate : pickupDate; //formatDate(data.returnDate) : pickupDate;
+        const message =  'Solicitud registrada exitosamente';
+
+        if(new Date(finalDate!) < new Date(pickupDate!)){
+          Toast.show('La fecha final debe ser mayor a la fecha inicial', {
+            duration: Toast.durations.LONG,
+            });
+        }
+
+        setSavingForm(true);
+        for(let currentDate = new Date(pickupDate!); currentDate <= new Date(finalDate!); currentDate.setDate(currentDate.getDate() + 1)){
+          const serviceNumber = await getCounter();
+          const { returnDate, returnTime, pickUpDate, pickUpTime, ...filteredData } = data;
+          const newData = {
+            ...filteredData,
+            serviceNumber,
+            pickUpTime: currentDate,
+            pickUpDate: currentDate,
             requester:  userInfo.numeroDocumento,
             requesterName: userInfo.nombres + ' ' + userInfo.apellidos,
             requestState: 'Pendiente',
-          });
+          }
+          console.log(newData)
+          try {
+            await saveEnterpriseService(newData);
+            await updateCounter();
+          } catch (error) {
+            throw error;
+          }
+        }
+      }
+
+      const onSubmit = async (data: scheduleServiceCompany) => {
+        try {
+          await processDateRange(data);
           dispatch(setRequestState('Pendientes'));
           const message =  'Solicitud registrada exitosamente'
             Toast.show(message, {
@@ -185,13 +211,12 @@ export const ScheduleCompanyServiceForm = () => {
                 duration: Toast.durations.LONG,
                 });
         } finally { setSavingForm(false) }
-        
       };
 
       const onChangeSearch = (query : string) => {
         if(query.length > 0){
           
-          const filteredLocations = locations.filter(x => x.description.toLowerCase().includes(query.toLowerCase()));
+          const filteredLocations = locations?.filter(x => x.description.toLowerCase().includes(query.toLowerCase()));
           setfilteredLocations(filteredLocations);
         }else{
           setfilteredLocations(locations);
@@ -224,7 +249,7 @@ export const ScheduleCompanyServiceForm = () => {
         day: 'numeric',
       };
 
-      const onSelectPickUpDate = (event: DateTimePickerEvent, date?: Date | undefined) => {
+      const onSelectPickUpDate = (date?: Date | undefined) => {
         
         const currentDate = date as Date;
             setshowDatePicker(false);
@@ -234,7 +259,7 @@ export const ScheduleCompanyServiceForm = () => {
             setminReturnDate(currentDate);
       }
 
-      const onSelectReturnDate = (event: DateTimePickerEvent, date?: Date | undefined) => {
+      const onSelectReturnDate = (date?: Date | undefined) => {
         
         const currentDate = date as Date;
 
@@ -245,7 +270,7 @@ export const ScheduleCompanyServiceForm = () => {
 
       }
 
-      const onTimeSelect = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
+      const onTimeSelect = (selectedDate: Date | undefined) => {
 
         const currentDate  = selectedDate as Date;
         const formatedDate = convertTo12HourFormat(currentDate.toString());
@@ -327,7 +352,7 @@ export const ScheduleCompanyServiceForm = () => {
                         <Text> 
                           <Ionicons name='location-outline' size={RFPercentage(2)} />
                           {" "}
-                          { value.description || 'Seleccione el origen' }
+                          { value?.description || 'Seleccione el origen' }
                         </Text>
                       </TouchableOpacity>
                     </> 
@@ -356,7 +381,7 @@ export const ScheduleCompanyServiceForm = () => {
                         <Text> 
                           <Ionicons name='location-outline' size={RFPercentage(2)} />
                           {" "}
-                          { value.description || 'Seleccione el destino' }
+                          { value?.description || 'Seleccione el destino' }
                         </Text>
                       </TouchableOpacity>
                     </>
@@ -369,7 +394,7 @@ export const ScheduleCompanyServiceForm = () => {
               <View style={styles.dateTimeContainer}>
                 <Text style={{marginBottom: RFPercentage(1)}}>
                   <Text style={{color: '#d9362b'}}>* </Text> 
-                  Fecha inicial 
+                  Fecha 
                 </Text>
                 <View  style={{flexDirection: 'row'}} >
                   <Controller
@@ -433,7 +458,7 @@ export const ScheduleCompanyServiceForm = () => {
               { viajeDoble &&
               
                 (<View style={{ ...styles.dateTimeContainer, marginTop: RFPercentage(1.8)}}>
-                  <Text style={{marginBottom: RFPercentage(1)}}> Fecha regreso </Text>
+                  <Text style={{marginBottom: RFPercentage(1)}}> Fecha final</Text>
                   <View  style={{flexDirection: 'row'}} >
                     <Controller
                         control={control}
@@ -491,7 +516,7 @@ export const ScheduleCompanyServiceForm = () => {
               {/** Selector viaje doble */}
               <View style={{alignItems:'flex-start'}}>
                   <Checkbox.Item 
-                      label="Viaje doble" 
+                      label="Viaje recurrente" 
                       status={ viajeDoble ? 'checked' : 'unchecked' } 
                       onPress={() => showHiddenInput()}
                       position="leading" 
@@ -614,32 +639,32 @@ export const ScheduleCompanyServiceForm = () => {
               </View>
 
               { /** Selector de fecha inicial */ }
-              {showDatePicker && (
+              {showDatePicker &&
                 <DateTimePicker
-                  minimumDate={minPickUpDate}
-                  value={pickUpdate}
-                  mode='date'
-                  onChange={onSelectPickUpDate}
+                  isVisible={showDatePicker}
+                  onConfirm={onSelectPickUpDate}
+                  onCancel={()=> setshowDatePicker(false)}
                 />
-              )}
-
+              }
               { /** Selector de fecha de retorno */ }
               {showReturnDatePicker && (
                 <DateTimePicker
+                  isVisible={showReturnDatePicker}
+                  onConfirm={onSelectReturnDate}
+                  onCancel={()=> setshowReturnDatePicker(false)}
                   minimumDate={minReturnDate}
-                  value={returnDate}
                   mode='date'
-                  onChange={onSelectReturnDate}
                 />
               )}
 
               {/** Selector de hora */}
               {showTimePicker && (
                   <DateTimePicker
-                    value={time}
+                    isVisible={showTimePicker}
+                    onConfirm={onTimeSelect}
+                    onCancel={()=> setshowTimePicker(false)}
                     mode='time'
                     is24Hour={false}
-                    onChange={onTimeSelect}
                   />
                 )}
 
@@ -662,13 +687,13 @@ export const ScheduleCompanyServiceForm = () => {
                           filteredLocations.map((location) => 
                             <TouchableOpacity
                               onPress={() => onSetLocation(location)}
-                              key={location.description}
+                              key={location?.description}
                               activeOpacity={0.6}
                               style={{
                                 ...styles.locationItem
                               }}
                             >
-                                <Text> { location.description } </Text>
+                                <Text> { location?.description } </Text>
                             </TouchableOpacity>
                           )
                           

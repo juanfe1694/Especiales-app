@@ -38,10 +38,10 @@ export const ServicesTabs = ({ items, action } : ServiceTabsProps) => {
                         <Text style={ ServicesTabsStyles.label }>
                             { item.label }
                         </Text>
-                        { 
+                        {/* 
                             item.notification &&
                             <Badge size={10} style={ ServicesTabsStyles.badge }></Badge>
-                        }
+                        */}
                     </View>
                 </TouchableOpacity>
             )
