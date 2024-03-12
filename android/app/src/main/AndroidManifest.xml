@@ -30,9 +30,8 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="especialesapp"/>
-        <data android:scheme="com.juanfe1694.Especiales_App"/>
-        <data android:scheme="exp+especialesapp"/>
         <data android:scheme="com.fenixserviciosespeciales.mobility.app"/>
+        <data android:scheme="exp+especialesapp"/>
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>

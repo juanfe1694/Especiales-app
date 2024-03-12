@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {  Button, Dialog, Portal } from 'react-native-paper';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Vehicle, scheduleServiceCompany } from '../../interfaces/services/servicesInterfaces';
 import { useDateTimeFormater } from '../../hooks/useDateTimeFormater';
 import { cardStyles } from './cardStyles';
@@ -194,103 +194,107 @@ export const ServiceDetail = ({
     <> 
         <Portal>
             <Dialog visible={dialogVisible} style={{borderRadius:10}} onDismiss={closeDialog}>
-                <View  
-                    style={{
-                        display:'flex', 
-                        flexDirection:'row', 
-                        justifyContent:'space-between',
-                        marginBottom: 15
-                    }}
-                >
-                <View>
-                    <Text style={{ marginLeft:20, fontSize: 20, fontWeight:'500' }}>
-                    Detalle del servicio
-                    </Text>
-                </View>
-                <View>
-                    <TouchableOpacity onPress={closeDialog}>
-                    <Ionicons name='close' size={25} style={{ marginRight:20}}  />
-                    </TouchableOpacity>
-                </View>
-                </View>       
-                <Dialog.Content>
+                <ScrollView>
+                    <View  
+                        style={{
+                            display:'flex', 
+                            flexDirection:'row', 
+                            justifyContent:'space-between',
+                            marginBottom: 15
+                        }}
+                    >
                     <View>
-                        <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
-                            <Text><Ionicons name='calendar' size={RFPercentage(2)} /> Fecha salida </Text>
-                            <Text> { getFormatedDate(pickUpDate) } </Text>
-                        </View>
-                        <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
-                            <Text><Ionicons name='time' size={RFPercentage(2)} /> Hora salida </Text>
-                            <Text> { getFormatedTime(pickUpTime) } </Text>
-                        </View>
-                        { (returnDate && returnTime) &&
-                            <>
-                                <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
-                                    <Text><Ionicons name='calendar' size={RFPercentage(2)} /> Fecha regreso </Text>
-                                    <Text> { getFormatedDate(returnDate) } </Text>
-                                </View>
-                                <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
-                                    <Text><Ionicons name='time' size={RFPercentage(2)} /> Hora regreso </Text>
-                                    <Text> { getFormatedTime(returnTime) } </Text>
-                                </View>
-                            </>
-                        }
-                        <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
-                            <Text><Ionicons name='people' size={RFPercentage(2)} /> # Pasajeros </Text>
-                            <Text> { numberOfPassengers } </Text>
-                        </View>
-                        <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
-                            <Text><Ionicons name='location-sharp' size={RFPercentage(2)} /> Origen </Text>
-                            <Text style={{flex: 1, textAlign:'right'}}> { origin.description } </Text>
-                        </View>
-                        <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
-                            <Text><Ionicons name='location-sharp' size={RFPercentage(2)} />  Destino </Text>
-                            <Text style={{flex: 1, textAlign:'right'}}> { destination.description } </Text>
-                        </View>
-                        { driver &&
-                            <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
-                                <Text><Ionicons name='man' size={RFPercentage(2)} />  Conductor </Text>
-                                <Text style={{flex: 1, textAlign:'right'}}> { driver?.label } </Text>
-                            </View>
-                        }
-                        { vehicle &&
-                            <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
-                                <Text><Ionicons name='car-sport' size={RFPercentage(2)} />  Vehículo </Text>
-                                <Text style={{flex: 1, textAlign:'right'}}> { regVehicle } </Text>
-                            </View>
-                        }
-                            <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
-                                <Text><Ionicons name='wallet' size={RFPercentage(2)} />  Valor </Text>
-                                <Text style={{flex: 1, textAlign:'right'}}> 
-                                    $ { showValueCompany ? valueCompany : valueThird } 
-                                </Text>
-                            </View>
+                        <Text style={{ marginLeft:20, fontSize: 20, fontWeight:'500' }}>
+                        Detalle del servicio
+                        </Text>
                     </View>
-                </Dialog.Content>
-                {/** Si el servicio está en estado Asignado, mostrar los botones */}
-                { showActions &&
-                    requestState == 'Asignado' ?
-                        <Dialog.Actions>
-                            <Button mode='outlined' style={{borderRadius: 5}} textColor='#6D6D6D' onPress={rejectService} disabled={isLoading}> Rechazar </Button>
-                            <Button mode='contained'  style={{borderRadius: 5}} onPress={confirmService} loading={isLoading}> Confirmar </Button>
-                        </Dialog.Actions>
-                
-                /** Si el servicio está en estado Confirmado, mostrar los botones */
-                
-                    : showActions && requestState == 'Confirmado' ?
+                    <View>
+                        <TouchableOpacity onPress={closeDialog}>
+                        <Ionicons name='close' size={25} style={{ marginRight:20}}  />
+                        </TouchableOpacity>
+                    </View>
+                    </View>       
+                    <Dialog.Content>
+                        <View>
+                            <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
+                                <Text><Ionicons name='calendar' size={RFPercentage(2)} /> Fecha salida </Text>
+                                <Text> { getFormatedDate(pickUpDate) } </Text>
+                            </View>
+                            <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
+                                <Text><Ionicons name='time' size={RFPercentage(2)} /> Hora salida </Text>
+                                <Text> { getFormatedTime(pickUpTime) } </Text>
+                            </View>
+                            { (returnDate && returnTime) &&
+                                <>
+                                    <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
+                                        <Text><Ionicons name='calendar' size={RFPercentage(2)} /> Fecha regreso </Text>
+                                        <Text> { getFormatedDate(returnDate) } </Text>
+                                    </View>
+                                    <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
+                                        <Text><Ionicons name='time' size={RFPercentage(2)} /> Hora regreso </Text>
+                                        <Text> { getFormatedTime(returnTime) } </Text>
+                                    </View>
+                                </>
+                            }
+                            <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
+                                <Text><Ionicons name='people' size={RFPercentage(2)} /> # Pasajeros </Text>
+                                <Text> { numberOfPassengers } </Text>
+                            </View>
+                            <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
+                                <Text><Ionicons name='location-sharp' size={RFPercentage(2)} /> Origen </Text>
+                                <Text style={{flex: 1, textAlign:'right'}}> { origin.description } </Text>
+                            </View>
+                            <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
+                                <Text><Ionicons name='location-sharp' size={RFPercentage(2)} />  Destino </Text>
+                                <Text style={{flex: 1, textAlign:'right'}}> { destination.description } </Text>
+                            </View>
+                            { driver &&
+                                <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
+                                    <Text><Ionicons name='man' size={RFPercentage(2)} />  Conductor </Text>
+                                    <Text style={{flex: 1, textAlign:'right'}}> { driver?.label } </Text>
+                                </View>
+                            }
+                            { vehicle &&
+                                <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
+                                    <Text><Ionicons name='car-sport' size={RFPercentage(2)} />  Vehículo </Text>
+                                    <Text style={{flex: 1, textAlign:'right'}}> { regVehicle } </Text>
+                                </View>
+                            }
+                            { (valueCompany && valueThird) &&
+                                <View style={[cardStyles.cardRow,{marginHorizontal: 0}]}>
+                                    <Text><Ionicons name='wallet' size={RFPercentage(2)} />  Valor </Text>
+                                    <Text style={{flex: 1, textAlign:'right'}}> 
+                                        $ { showValueCompany ? valueCompany : valueThird } 
+                                    </Text>
+                                </View>
+                            }
+                        </View>
+                    </Dialog.Content>
+                    {/** Si el servicio está en estado Asignado, mostrar los botones */}
+                    { showActions &&
+                        requestState == 'Asignado' ?
                             <Dialog.Actions>
-                                <Button mode='outlined' style={{borderRadius: 5}} textColor='#6D6D6D' onPress={cancelService} disabled={isLoading}> Cancelar </Button>
-                                <Button mode='contained'  style={{borderRadius: 5}} onPress={startService} loading={isLoading}> Iniciar </Button>
+                                <Button mode='outlined' style={{borderRadius: 5}} textColor='#6D6D6D' onPress={rejectService} disabled={isLoading}> Rechazar </Button>
+                                <Button mode='contained'  style={{borderRadius: 5}} onPress={confirmService} loading={isLoading}> Confirmar </Button>
                             </Dialog.Actions>
-                
-                /** Si el servicio está en estado transito, mostrar los botones */
-                
-                    : showActions && requestState == 'Transito' &&
-                            <Dialog.Actions>
-                            { /*<Button mode='outlined' style={{borderRadius: 5}} textColor='#6D6D6D' onPress={rejectService} disabled={isLoading}> Rechazar </Button>*/}
-                                <Button mode='contained'  style={{borderRadius: 5}} onPress={displayConfirmDialog} loading={isLoading}> Finalizar </Button>
-                            </Dialog.Actions>
-                }
+                    
+                    /** Si el servicio está en estado Confirmado, mostrar los botones */
+                    
+                        : showActions && requestState == 'Confirmado' ?
+                                <Dialog.Actions>
+                                    <Button mode='outlined' style={{borderRadius: 5}} textColor='#6D6D6D' onPress={cancelService} disabled={isLoading}> Cancelar </Button>
+                                    <Button mode='contained'  style={{borderRadius: 5}} onPress={startService} loading={isLoading}> Iniciar </Button>
+                                </Dialog.Actions>
+                    
+                    /** Si el servicio está en estado transito, mostrar los botones */
+                    
+                        : showActions && requestState == 'Transito' &&
+                                <Dialog.Actions>
+                                { /*<Button mode='outlined' style={{borderRadius: 5}} textColor='#6D6D6D' onPress={rejectService} disabled={isLoading}> Rechazar </Button>*/}
+                                    <Button mode='contained'  style={{borderRadius: 5}} onPress={displayConfirmDialog} loading={isLoading}> Finalizar </Button>
+                                </Dialog.Actions>
+                    }
+                </ScrollView>
             </Dialog>
         </Portal>
         <RejectServiceDialog 

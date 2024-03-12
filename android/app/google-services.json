@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:173297199687:android:7ed9b0e56c5ef49211df62",
+        "mobilesdk_app_id": "1:173297199687:android:9025b930b52fd05a11df62",
         "android_client_info": {
-          "package_name": "com.juanfe1694.Especiales_App"
+          "package_name": "com.fenixserviciosespeciales.mobility.app"
         }
       },
       "oauth_client": [
@@ -22,6 +22,15 @@
       "api_key": [
         {
           "current_key": "AIzaSyCR13qHVjtFqouO_SUeknDMzqUIBIDBBs4"
+        },
+        {
+          "current_key": "AIzaSyB4j1he8XiLQeviL-zFrDMfAdJFrS8d2Yc"
+        },
+        {
+          "current_key": "AIzaSyCOCoYBMOe3dOW3VBrrtn2id64XISJ3pKY"
+        },
+        {
+          "current_key": "AIzaSyB-Ll00k7B2C0EfYnW7fkCXIoXz0RLmLjU"
         }
       ],
       "services": {

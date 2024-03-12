@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:173297199687:android:7ed9b0e56c5ef49211df62",
+        "mobilesdk_app_id": "1:173297199687:android:9025b930b52fd05a11df62",
         "android_client_info": {
-          "package_name": "com.juanfe1694.Especiales_App"
+          "package_name": "com.fenixserviciosespeciales.mobility.app"
         }
       },
       "oauth_client": [

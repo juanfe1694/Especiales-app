@@ -19,11 +19,9 @@ Notifications.setNotificationHandler({
 export default function Main() {
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
+  const notificationListener = useRef<React.MutableRefObject<undefined>>();
   const responseListener = useRef();
   
-  //console.log(expoPushToken);
-  //console.log(Constants.expoConfig.extra.eas.projectId)
   const colorScheme = useColorScheme();
   const nav = useNavigation();
   useEffect(() => {

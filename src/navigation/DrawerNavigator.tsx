@@ -44,11 +44,10 @@ async function registerForPushNotificationsAsync() {
       })).data
     
     } catch (error) {
+      console.log(error)
       throw error;
     }
-    
-    /*token = (await Notifications.getDevicePushTokenAsync())*/
-    console.log(token);
+ 
   } else {
     alert('Must use physical device for Push Notifications');
   }
