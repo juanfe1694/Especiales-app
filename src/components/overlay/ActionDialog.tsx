@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
-import { Button, Dialog, Portal, TextInput, useTheme } from 'react-native-paper'
+import React, { useEffect } from 'react'
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { Button, Dialog, TextInput, useTheme } from 'react-native-paper'
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { scheduleServiceCompany } from '../../interfaces/services/servicesInterfaces';
 import { useAppSelector } from '../../app/hooks';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import Modal from "react-native-modal";
 
 type Detail = {
     title: string;
@@ -48,79 +48,89 @@ export const ActionDialog = ({ isLoading, dialogVisible, detail, confirmAction, 
     }, [dialogVisible])
     
   return (
-    <Portal>
-        <Dialog visible={dialogVisible} style={{borderRadius:10}} onDismiss={discardAction}>
-            <View  
-                style={{
-                    display:'flex', 
-                    flexDirection:'row', 
-                    justifyContent:'space-between',
-                    marginBottom: 15
-                }}
-            >
-            <View>
-                <Text style={{ marginLeft:20, fontSize: 20, fontWeight:'500' }}>
-                    {title}
-                </Text>
-            </View>
-            <View>
-                <TouchableOpacity onPress={discardAction}>
-                <Ionicons name='close' size={25} style={{ marginRight:20}}  />
-                </TouchableOpacity>
-            </View>
-            </View>       
-            <Dialog.Content>
-                <View>
-                    <Text style={{marginBottom:5}}>
-                         {reason}
-                    </Text>
-                    <Controller
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { onChange, onBlur, value } }) => (
-                        <>
-                            <TextInput
-                                contentStyle={{ fontSize: 14}}
-                                outlineStyle={{
-                                borderColor: customTheme.colors.border
-                                }}
-                                mode="outlined"
-                                multiline
-                                numberOfLines={5}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                value={value}
-                                placeholder={placeholder}
-                                underlineColorAndroid="black"
-                                autoCorrect
-                                onSubmitEditing={handleSubmit(confirmAction)}
-                                activeOutlineColor='#002851'
+    <View>
+        <Modal
+            avoidKeyboard
+            isVisible={dialogVisible}
+            onDismiss={discardAction}
+            backdropOpacity={0.3}
+            onBackdropPress={discardAction}
+        >
+            <View style={{borderRadius:10, backgroundColor: 'white', paddingTop: 20}}>
+                <ScrollView>
+                    <View  
+                        style={{
+                            display:'flex', 
+                            flexDirection:'row', 
+                            justifyContent:'space-between',
+                            marginBottom: 15
+                        }}
+                    >
+                        <View>
+                            <Text style={{ marginLeft:20, fontSize: 20, fontWeight:'500' }}>
+                                {title}
+                            </Text>
+                        </View>
+                        <View>
+                            <TouchableOpacity onPress={discardAction}>
+                            <Ionicons name='close' size={25} style={{ marginRight:20}}  />
+                            </TouchableOpacity>
+                        </View>
+                    </View>       
+                    <Dialog.Content>
+                        <View>
+                            <Text style={{marginBottom:5}}>
+                                {reason}
+                            </Text>
+                            <Controller
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                <>
+                                    <TextInput
+                                        contentStyle={{ fontSize: 14}}
+                                        outlineStyle={{
+                                        borderColor: customTheme.colors.border
+                                        }}
+                                        mode="outlined"
+                                        multiline
+                                        numberOfLines={5}
+                                        onChangeText={onChange}
+                                        onBlur={onBlur}
+                                        value={value}
+                                        placeholder={placeholder}
+                                        underlineColorAndroid="black"
+                                        autoCorrect
+                                        onSubmitEditing={handleSubmit(confirmAction)}
+                                        activeOutlineColor='#002851'
+                                    />
+                                </>
+                                )}
+                                name="description"
+                                defaultValue=""
                             />
-                        </>
-                        )}
-                        name="description"
-                        defaultValue=""
-                    />
-                    {errors.description && <Text style={{color: '#d9362b', textAlign: 'right'}}>{errorMessage}</Text>}
-                </View>
-            </Dialog.Content>
-            <Dialog.Actions>
-                <Button 
-                    mode='outlined' 
-                    style={{borderRadius: 5}} 
-                    textColor='#6D6D6D' 
-                    onPress={discardAction}
-                    disabled={isLoading} 
-                > Regresar </Button>
-                <Button 
-                    mode='contained'  
-                    style={{borderRadius: 5}} 
-                    onPress={handleSubmit(confirmAction)} 
-                    loading={isLoading}
-                    disabled={!(description?.length > 0)}
-                > {label} </Button>
-            </Dialog.Actions>
-        </Dialog>
-    </Portal>
+                            {errors.description && <Text style={{color: '#d9362b', textAlign: 'right'}}>{errorMessage}</Text>}
+                        </View>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button 
+                            mode='outlined' 
+                            style={{borderRadius: 5}} 
+                            textColor='#6D6D6D' 
+                            onPress={discardAction}
+                            disabled={isLoading} 
+                        > Regresar </Button>
+                        <Button 
+                            mode='contained'  
+                            style={{borderRadius: 5}} 
+                            onPress={handleSubmit(confirmAction)} 
+                            loading={isLoading}
+                            disabled={!(description?.length > 0)}
+                        > {label} </Button>
+                    </Dialog.Actions>
+                </ScrollView>
+            </View>
+        </Modal>
+    </View>
   )
 }
