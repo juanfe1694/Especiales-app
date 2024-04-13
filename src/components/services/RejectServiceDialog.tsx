@@ -80,9 +80,9 @@ export const RejectServiceDialog = ({ closeDialog, openDialog, dialogVisible, se
         <Modal
             avoidKeyboard
             isVisible={dialogVisible}
-            onDismiss={openDialog}
+            onDismiss={closeDialog}
             backdropOpacity={0.3}
-            onBackdropPress={openDialog}
+            onBackdropPress={closeDialog}
         >
             <View style={{borderRadius:10, backgroundColor: 'white', paddingTop: 20}}>
                 <ScrollView>

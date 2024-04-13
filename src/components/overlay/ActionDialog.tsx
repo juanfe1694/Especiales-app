@@ -94,7 +94,7 @@ export const ActionDialog = ({ isLoading, dialogVisible, detail, confirmAction, 
                                         }}
                                         mode="outlined"
                                         multiline
-                                        numberOfLines={5}
+                                        numberOfLines={3}
                                         onChangeText={onChange}
                                         onBlur={onBlur}
                                         value={value}

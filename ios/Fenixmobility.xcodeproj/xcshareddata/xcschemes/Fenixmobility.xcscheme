@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Fenixserviciosespeciales.app"
-               BlueprintName = "Fenixserviciosespeciales"
-               ReferencedContainer = "container:Fenixserviciosespeciales.xcodeproj">
+               BuildableName = "Fenixmobility.app"
+               BlueprintName = "Fenixmobility"
+               ReferencedContainer = "container:Fenixmobility.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "FenixserviciosespecialesTests.xctest"
-               BlueprintName = "FenixserviciosespecialesTests"
-               ReferencedContainer = "container:Fenixserviciosespeciales.xcodeproj">
+               BuildableName = "FenixmobilityTests.xctest"
+               BlueprintName = "FenixmobilityTests"
+               ReferencedContainer = "container:Fenixmobility.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Fenixserviciosespeciales.app"
-            BlueprintName = "Fenixserviciosespeciales"
-            ReferencedContainer = "container:Fenixserviciosespeciales.xcodeproj">
+            BuildableName = "Fenixmobility.app"
+            BlueprintName = "Fenixmobility"
+            ReferencedContainer = "container:Fenixmobility.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Fenixserviciosespeciales.app"
-            BlueprintName = "Fenixserviciosespeciales"
-            ReferencedContainer = "container:Fenixserviciosespeciales.xcodeproj">
+            BuildableName = "Fenixmobility.app"
+            BlueprintName = "Fenixmobility"
+            ReferencedContainer = "container:Fenixmobility.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
