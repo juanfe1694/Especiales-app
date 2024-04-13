@@ -3,7 +3,7 @@
     "name": "Fenix mobility",
     "scheme": "especialesapp",
     "slug": "Especiales_App",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -25,16 +25,6 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "config": {
-        "cleartext": {
-          "configurations": {
-            "devDebug": true
-          }
-        },
-        "googleMaps": {
-          "apiKey": "AIzaSyB4j1he8XiLQeviL-zFrDMfAdJFrS8d2Yc"
-        }
       },
       "package": "com.fenixserviciosespeciales.mobility.app",
       "permissions": [
@@ -59,6 +49,10 @@
         }
       ]
     ],
-    "owner": "fenix-mobility"
+    "owner": "fenix-mobility",
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/9a3764b5-58c9-45f3-862b-4b293044e90c"
+    }
   }
 }
