@@ -6,14 +6,11 @@ import {
   startLoading,
 } from "../../slices/security/authSlice";
 import { Dispatch } from "redux";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LoginResponse, UserCredentialsFetch } from "../../../interfaces/auth/authInterfaces";
 import axios from "../../../../axiosConfig";
-import Toast from 'react-native-root-toast';
 import jwtDecode from "jwt-decode";
 
-const url = process.env.EXPO_PUBLIC_API_URL;
 
 /* check if the user is registered */
 export const loginThunk = (userCredentials: UserCredentialsFetch) => async (dispatch: Dispatch) => {

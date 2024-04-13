@@ -21,10 +21,11 @@ export type RootStackParamList = {
 export type DrawerParamList = {
   Home: undefined;
   ScheduleServiceCompany: undefined;
-  ServicesListScreen: undefined;
+  ServicesListScreen: { serviceId: string } | undefined;
   DriverMapScreen: undefined;
+  DriverServicesListScreen: { serviceId: string } | undefined;
+  BlankPageScreen: undefined;
 };
-
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
   RootStackParamList,

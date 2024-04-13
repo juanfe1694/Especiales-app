@@ -4,9 +4,6 @@
  *
  */
 import React, { useEffect } from "react";
-import {
-  NavigationContainer,
-} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   ColorSchemeName,
@@ -18,7 +15,9 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { Loading } from "../screens/utilities/Loading";
 import { DrawerNavigator } from "./DrawerNavigator";
 import { setTheme } from "../redux/slices/theme/themeSlice";
-import { PaperProvider, MD3LightTheme, adaptNavigationTheme, MD3Theme } from 'react-native-paper';
+import { PaperProvider, MD3LightTheme, MD3Theme } from 'react-native-paper';
+
+//import { getMessaging, getToken } from "firebase/messaging";
 
 export default function Navigation({
   colorScheme,
@@ -28,19 +27,27 @@ export default function Navigation({
 
   const { theme, light, dark } = useAppSelector(state => state.theme);
   const dispatch = useAppDispatch();
-  
+  //const messaging = getMessaging();
+// Add the public key generated from the console here.
+  //getToken(messaging, {vapidKey: "n2wtZKjBZBvX8vCCnM9wWAJadw-Mk2u7-vRs6Y8r2fw"});
   useEffect(() => {
-    if( colorScheme == 'light' ){
+    dispatch(setTheme(light))
+
+    /*if( colorScheme == 'light' ){
       dispatch(setTheme(light))
     }else{
       dispatch(setTheme(dark))
-    }
+    }*/
   }, [])
-
   const paperTheme : MD3Theme = {
     ...MD3LightTheme,
     colors:{
       ...MD3LightTheme.colors,
+      primaryContainer:'white',
+      elevation:{
+        ...MD3LightTheme.colors.elevation,
+        level3:'white'
+      },
       primary: "#002851",
       background: 'white',
     }
@@ -49,13 +56,7 @@ export default function Navigation({
   
   return (
     <PaperProvider theme={ paperTheme }>
-      <NavigationContainer
-        theme={
-          theme
-        }
-      >
         <RootNavigator />
-      </NavigationContainer>
     </PaperProvider>
   );
 }

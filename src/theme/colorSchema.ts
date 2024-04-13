@@ -9,7 +9,8 @@ const tintColorDark = '#fff';
       card: "rgb(255, 255, 255)", 
       notification: "rgb(255, 59, 48)", 
       primary: "rgb(0, 122, 255)", 
-      text: "rgb(28, 28, 30)"
+      text: "rgb(28, 28, 30)",
+      error: "rgba(179, 38, 30, 1)"
     }, 
     dark: false,
     buttonPrimary: "#002851",
@@ -24,6 +25,7 @@ const tintColorDark = '#fff';
       notification: "rgb(255, 69, 58)", 
       primary: "rgb(10, 132, 255)", 
       text: "rgb(229, 229, 231)",
+      error: "rgba(179, 38, 30, 1)"
   }, 
     dark: true,
     buttonPrimary: "#002851",

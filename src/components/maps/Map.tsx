@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { View,StyleSheet, Text } from 'react-native'
-import MapView, { Region, Marker, LatLng, MapPressEvent, PROVIDER_GOOGLE } from 'react-native-maps';
+import { View,StyleSheet, Text, Platform } from 'react-native'
+import MapView, { Region, Marker, LatLng, MapPressEvent, PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { AutoCompleteLocations } from './AutoCompleteLocations';
 import { MainButton } from '../../app/custom-components/MainButton';
@@ -115,7 +115,7 @@ export const Map = ( { onLocationChange, setshowAddressSelector } : Props ) => {
   return (
     <View style={styles.container}>
         <MapView 
-            provider={PROVIDER_GOOGLE}
+            provider={ Platform.OS == 'ios' ? PROVIDER_DEFAULT : PROVIDER_GOOGLE} 
             style={ styles.map }
             initialRegion={ region } 
             region={ region }

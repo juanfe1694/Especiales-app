@@ -8,3 +8,9 @@ export type Address = {
   longitude: number;
   description: string; 
 }
+
+export type RouteProps = {
+  origin: Address;
+  destination: Address;
+  departureTime: Date;
+}
