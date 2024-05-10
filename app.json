@@ -18,7 +18,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.fenixserviciosespeciales.mobility.app",
-      "buildNumber": "1.2.0"
+      "buildNumber": "2"
     },
     "android": {
       "useNextNotificationsApi": true,
@@ -33,7 +33,7 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE"
       ],
-      "versionCode": "1.2.0"
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
