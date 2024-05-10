@@ -6,7 +6,8 @@ import {
     ScrollView,
     KeyboardAvoidingView,
     Linking,
-    TouchableOpacity
+    TouchableOpacity,
+    Platform
 } from "react-native";
 import { loginStyles } from "./LoginStyles";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -79,13 +80,17 @@ export const LoginComponent = () => {
     };
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', }} behavior="padding" enabled>
+        <KeyboardAvoidingView 
+            style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', }} 
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+            enabled
+        >
             <View style={loginStyles.container}>
                 <View>
                     <ScrollView>
                         <View style={loginStyles.imageContainer}>
                             <Image
-                                source={require('../../../assets/logos/Logo-especiales.jpg')}
+                                source={require('../../../assets/logos/Logo-Mobility.png')}
                                 style={loginStyles.image}
                             />
                         </View>

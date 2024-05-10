@@ -60,11 +60,11 @@ export const loginStyles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: RFPercentage(5)
+        marginVertical: RFPercentage(4)
     },
     image: {
-        width: RFPercentage(20),
-        height: RFPercentage(20),
+        width: RFPercentage(25),
+        height: RFPercentage(25),
         padding: 10,
         aspectRatio: 1.4
       },

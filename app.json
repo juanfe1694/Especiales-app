@@ -3,7 +3,7 @@
     "name": "Fenix mobility",
     "scheme": "especialesapp",
     "slug": "Especiales_App",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -50,7 +50,7 @@
       ]
     ],
     "owner": "fenix-mobility",
-    "runtimeVersion": "1.0.0",
+    "runtimeVersion": "1.2.0",
     "updates": {
       "url": "https://u.expo.dev/9a3764b5-58c9-45f3-862b-4b293044e90c"
     }
