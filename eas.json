@@ -6,28 +6,30 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "env":{
-        "EXPO_PUBLIC_API_URL=https":"https://us-central1-especiales-app.cloudfunctions.net/api",
-        "EXPO_PUBLIC_LOCATIONS_API_KEY":"AIzaSyB-Ll00k7B2C0EfYnW7fkCXIoXz0RLmLjU"
-
-      }
+      "env": {
+        "EXPO_PUBLIC_API_URL=https": "https://us-central1-especiales-app.cloudfunctions.net/api",
+        "EXPO_PUBLIC_LOCATIONS_API_KEY": "AIzaSyB-Ll00k7B2C0EfYnW7fkCXIoXz0RLmLjU"
+      },
+      "channel": "development"
     },
     "preview": {
       "android": {
         "buildType": "apk"
       },
-      "env":{
-        "EXPO_PUBLIC_API_URL=https":"https://us-central1-especiales-app.cloudfunctions.net/api",
-        "EXPO_PUBLIC_LOCATIONS_API_KEY":"AIzaSyB-Ll00k7B2C0EfYnW7fkCXIoXz0RLmLjU",
+      "env": {
+        "EXPO_PUBLIC_API_URL=https": "https://us-central1-especiales-app.cloudfunctions.net/api",
+        "EXPO_PUBLIC_LOCATIONS_API_KEY": "AIzaSyB-Ll00k7B2C0EfYnW7fkCXIoXz0RLmLjU",
         "EXPO_PUBLIC_MARKER_URI": "https://firebasestorage.googleapis.com/v0/b/especiales-app.appspot.com/o/logos%2Fmarcadores%2Ffenix-marker.png?alt=media&token=e0082ce7-d6b5-4760-ae50-f1dcdb136197"
-      }
+      },
+      "channel": "preview"
     },
     "production": {
-      "env":{
-        "EXPO_PUBLIC_API_URL=https":"https://us-central1-especiales-app.cloudfunctions.net/api",
-        "EXPO_PUBLIC_LOCATIONS_API_KEY":"AIzaSyB-Ll00k7B2C0EfYnW7fkCXIoXz0RLmLjU",
+      "env": {
+        "EXPO_PUBLIC_API_URL=https": "https://us-central1-especiales-app.cloudfunctions.net/api",
+        "EXPO_PUBLIC_LOCATIONS_API_KEY": "AIzaSyB-Ll00k7B2C0EfYnW7fkCXIoXz0RLmLjU",
         "EXPO_PUBLIC_MARKER_URI": "https://firebasestorage.googleapis.com/v0/b/especiales-app.appspot.com/o/logos%2Fmarcadores%2Ffenix-marker.png?alt=media&token=e0082ce7-d6b5-4760-ae50-f1dcdb136197"
-      }
+      },
+      "channel": "production"
     }
   },
   "submit": {
