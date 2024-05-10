@@ -33,7 +33,12 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE"
       ],
-      "versionCode": 2
+      "versionCode": 2,
+      "config":{
+        "googleMaps":{
+          "apiKey": "AIzaSyCR13qHVjtFqouO_SUeknDMzqUIBIDBBs4"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
