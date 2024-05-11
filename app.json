@@ -3,7 +3,7 @@
     "name": "Fenix mobility",
     "scheme": "especialesapp",
     "slug": "Especiales_App",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -18,7 +18,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.fenixserviciosespeciales.mobility.app",
-      "buildNumber": "2"
+      "buildNumber": "3"
     },
     "android": {
       "useNextNotificationsApi": true,
@@ -33,7 +33,7 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE"
       ],
-      "versionCode": 2,
+      "versionCode": 3,
       "config":{
         "googleMaps":{
           "apiKey": "AIzaSyCR13qHVjtFqouO_SUeknDMzqUIBIDBBs4"
@@ -57,7 +57,7 @@
       ]
     ],
     "owner": "fenix-mobility",
-    "runtimeVersion": "1.2.0",
+    "runtimeVersion": "1.3.0",
     "updates": {
       "url": "https://u.expo.dev/9a3764b5-58c9-45f3-862b-4b293044e90c"
     }
