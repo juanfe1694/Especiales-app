@@ -31,7 +31,7 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="especialesapp"/>
-        <data android:scheme="com.fenixserviciosespeciales.mobility.app"/>
+        <data android:scheme="com.fenixmobility.app"/>
         <data android:scheme="exp+especialesapp"/>
       </intent-filter>
     </activity>
